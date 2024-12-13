@@ -1,0 +1,67 @@
+{
+	"extensions": {
+		"recommendations": [
+			"ms-vscode.cmake-tools",
+			"ms-vscode.cpptools",
+			"zachflower.uncrustify",
+			"cschlosser.doxdocgen"
+		]
+	},
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"uncrustify.configPath.linux": "uncrustify.cfg",
+		"uncrustify.configPath.windows": "uncrustify.cfg",
+		"uncrustify.configPath.osx": "uncrustify.cfg",
+		"uncrustify.executablePath.linux": "uncrustify",
+		"uncrustify.useTempFile": false,
+		"editor.formatOnSave": true,
+		"doxdocgen.file.fileOrder": [
+			"file",
+			"author",
+			"date",
+			"empty",
+			"copyright"
+		],
+		"doxdocgen.generic.authorEmail": "I.korf@outlook.com",
+		"doxdocgen.generic.authorName": "Imre Korf.",
+		"doxdocgen.generic.includeTypeAtReturn": false,
+		"doxdocgen.generic.useGitUserEmail": true,
+		"doxdocgen.generic.useGitUserName": true,
+		"cmake.copyCompileCommands": "${workspaceFolder}/compile_commands.json"
+	},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+			{
+				"type": "cmake",
+				"request": "launch",
+				"name": "CMake: Configure project",
+				"cmakeDebugType": "configure",
+				"clean": false,
+				"configureAll": false
+			},
+			{
+				"name": "C++ Debug Launch (Windows MinGW)",
+				"type": "cppvsdbg",
+				"request": "launch",
+				"program": "${command:cmake.launchTargetPath}",
+				"args": [],
+				"cwd": "${workspaceFolder}",
+				"stopAtEntry": false,
+				"environment": [
+					{
+						// add the directory where our target was built to the PATHs
+						// it gets resolved by CMake Tools:
+						"name": "PATH",
+						"value": "$PATH:${command:cmake.launchTargetDirectory}"
+					},
+				],
+				"console": "integratedTerminal"
+			}
+		]
+	}
+}

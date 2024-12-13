@@ -1,0 +1,84 @@
+{
+	"version": 7,
+	"cmakeMinimumRequired": {
+		"major": 3,
+		"minor": 27,
+		"patch": 0
+	},
+	"configurePresets": [
+		{
+			"name": "gcc",
+			"displayName": "gcc",
+			"description": "Base build options for GCC/G++ compilers",
+			"generator": "Ninja",
+			"environment": {
+				"WARNING_FLAGS": "-Wall -Wextra -pedantic",
+				"DEFINES": "",
+				"DEBUG_FLAGS": "$env{WARNING_FLAGS} -g3 -Og",
+				"RELEASE_FLAGS": "$env{WARNING_FLAGS} -O2"
+			},
+			"cacheVariables": {
+				"CMAKE_C_COMPILER": "gcc",
+				"CMAKE_CXX_COMPILER": "g++"
+			},
+			"hidden": true
+		},
+		{
+			"name": "clang",
+			"displayName": "clang",
+			"description": "Base build options for Clang/Clang++ compilers",
+			"generator": "Ninja",
+			"environment": {
+				"WARNING_FLAGS": "-Wall -Wextra -pedantic",
+				"DEFINES": "",
+				"DEBUG_FLAGS": "$env{WARNING_FLAGS} -g3 -Og",
+				"RELEASE_FLAGS": "$env{WARNING_FLAGS} -O2"
+			},
+			"cacheVariables": {
+				"CMAKE_C_COMPILER": "clang",
+				"CMAKE_CXX_COMPILER": "clang++"
+			},
+			"hidden": true
+		},
+		{
+			"name": "Debug-clang",
+			"inherits": "clang",
+			"displayName": "Debug clang",
+			"description": "Debug clang build options",
+			"binaryDir": "${sourceDir}/Debug",
+			"cacheVariables": {
+				"CMAKE_BUILD_TYPE": "Debug"
+			}
+		},
+		{
+			"name": "Release-clang",
+			"inherits": "clang",
+			"displayName": "Release clang",
+			"description": "Release clang build options",
+			"binaryDir": "${sourceDir}/Release",
+			"cacheVariables": {
+				"CMAKE_BUILD_TYPE": "Release"
+			}
+		},
+		{
+			"name": "Debug-gcc",
+			"inherits": "gcc",
+			"displayName": "Debug gcc",
+			"description": "Debug gcc build options",
+			"binaryDir": "${sourceDir}/Debug",
+			"cacheVariables": {
+				"CMAKE_BUILD_TYPE": "Debug"
+			}
+		},
+		{
+			"name": "Release-gcc",
+			"inherits": "gcc",
+			"displayName": "Release gcc",
+			"description": "Release gcc build options",
+			"binaryDir": "${sourceDir}/Release",
+			"cacheVariables": {
+				"CMAKE_BUILD_TYPE": "Release"
+			}
+		}
+	]
+}
