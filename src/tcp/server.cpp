@@ -55,6 +55,7 @@ namespace tcp {
 
                 if (client != INVALID_SOCKET) {
                     auto ret = http::request::header::parse(tcp::stream(client), fields, handler, p_context);
+                    std::cout << "======parsed incoming message, sending response======" << std::endl;
                     http::response::header header;
                     http::response::body_buffer body;
                     body << html;
