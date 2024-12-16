@@ -1,5 +1,5 @@
 # project template
-this is a c/c++ project template based on cmake
+this is a c++ http server
 
 ## Requirements
 - CMake >= 3.27
