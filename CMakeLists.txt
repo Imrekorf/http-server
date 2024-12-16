@@ -35,5 +35,4 @@ add_subdirectory(src/)
 # note: tests requires a lib output
 # add_subdirectory(lib/)
 # add_subdirectory(tests/)
-
-# set(CMAKE_VERBOSE_MAKEFILE 1)
+set(CMAKE_VERBOSE_MAKEFILE ON)

@@ -2,6 +2,10 @@ cmake_minimum_required(VERSION 3.27)
 
 set(SOURCE_FILES
 	${PROJECT_SOURCE_DIR}/src/main.cpp
+	${PROJECT_SOURCE_DIR}/src/tcp/server.cpp
+	${PROJECT_SOURCE_DIR}/src/tcp/detail.cpp
+	${PROJECT_SOURCE_DIR}/src/tcp/stream.cpp
+	${PROJECT_SOURCE_DIR}/src/http/request.cpp
 )
 
 set(INCLUDE_DIR
@@ -14,6 +18,7 @@ add_executable(${PROJECT_NAME}
 )
 
 target_link_libraries(${PROJECT_NAME} PUBLIC
+	ws2_32
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC
