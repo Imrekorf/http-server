@@ -9,23 +9,23 @@
 #include "http/response.h"
 #include <cstring>
 
+using std::string_view_literals::operator""sv;
+
 namespace http::response {
-    std::span<const char> body_buffer::data(void) { return m_content; }
-
-    size_t body_buffer::print(std::span<const char> data)
+    size_t header::append(field f, std::span<const char> value)
     {
-        size_t avail  = m_buffer.size() - m_content.size();
-        size_t nwrite = data.size() > avail ? avail : data.size();
-        std::memcpy(m_buffer.begin() + m_content.size(), data.data(), nwrite);
+        size_t old_size = m_content.size();
+        *this << to_string(f) << ": "sv << value << "\r\n"sv;
 
-        return nwrite;
+        return m_content.size() - old_size;
     }
 
-    body_buffer& operator<<(body_buffer& b, std::span<const char> data)
+    size_t header::end(void)
     {
-        b.print(data);
+        size_t old_size = m_content.size();
+        *this << "\r\n"sv;
 
-        return b;
+        return m_content.size() - old_size;
     }
 
 } // namespace http::response

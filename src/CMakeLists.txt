@@ -6,6 +6,7 @@ set(SOURCE_FILES
 	${PROJECT_SOURCE_DIR}/src/tcp/detail.cpp
 	${PROJECT_SOURCE_DIR}/src/tcp/stream.cpp
 	${PROJECT_SOURCE_DIR}/src/http/request.cpp
+	${PROJECT_SOURCE_DIR}/src/http/response.cpp
 )
 
 set(INCLUDE_DIR

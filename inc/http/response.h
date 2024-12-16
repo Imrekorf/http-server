@@ -8,10 +8,9 @@
 
 #pragma once
 
-#include "request.h"
+#include "detail.h"
 #include <string_view>
 #include <cassert>
-#include <array>
 #include <span>
 
 namespace http::response {
@@ -19,10 +18,7 @@ namespace http::response {
     static constexpr size_t header_buffer_size = 512;
     static constexpr size_t body_buffer_size   = 1024;
 
-    class header {
-        std::array<char, header_buffer_size> m_buffer;
-        std::span<char> m_content;
-
+    class header : public detail::buffer_writer<header_buffer_size> {
     public:
 
         enum class field {
@@ -42,6 +38,7 @@ namespace http::response {
             location,
             retry_after,
             server,
+            keep_alive,
         };
     private:
 
@@ -64,6 +61,7 @@ namespace http::response {
                 case field::location: return "Location";
                 case field::retry_after: return "Retry-After";
                 case field::server: return "Server";
+                case field::keep_alive: return "Keep-Alive";
             }
 
             assert(false);
@@ -73,33 +71,20 @@ namespace http::response {
 
     public:
 
-        std::span<char> data(void);
-
+        size_t append(field f, std::span<const char> value);
+        size_t end(void);
     };
 
-    class body {
-    public:
-
-        virtual std::span<const char> data() = 0;
-    };
-
-    class body_buffer : public body {
-        std::array<char, body_buffer_size> m_buffer{ '\0' };
-        std::span<char> m_content{ m_buffer.begin(), 0 };
+    class body_buffer : public detail::buffer_writer<body_buffer_size> {
 
     public:
 
-        std::span<const char> data(void);
-        size_t                print(std::span<const char> data);
-
-        friend body_buffer& operator<<(body_buffer& b, std::span<const char> data);
+        std::span<const char> data(void) { return detail::buffer_writer<body_buffer_size>::data(); };
     };
 
     // TODO:
     // class body_file : public body {
 
     // };
-
-    body_buffer& operator<<(body_buffer& b, std::span<const char> data);
 
 } // namespace http::response
