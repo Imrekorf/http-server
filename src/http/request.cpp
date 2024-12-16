@@ -60,7 +60,7 @@ namespace http::request {
 
             for (auto f : fields) {
                 auto field_str = to_string(f);
-                if (line.starts_with(field_str)) {
+                if (line.starts_with(field_str) && line[field_str.size()] == ':') {
                     handler(f, line.substr(field_str.size() + sizeof(": ") - 1), p_context);
                     break;
                 }

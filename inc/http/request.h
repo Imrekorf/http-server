@@ -116,8 +116,8 @@ namespace http::request {
     };
 
     class body {
-        std::array<char, max_body_size> m_body_buffer{'\0'};
-        std::span<char> m_body_contents{m_body_buffer.begin(), 0};
+        std::array<char, max_body_size> m_body_buffer{ '\0' };
+        std::span<char> m_body_contents{ m_body_buffer.begin(), 0 };
         void* m_p_context;
 
         body(void* p_context);

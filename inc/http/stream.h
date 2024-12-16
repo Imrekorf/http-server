@@ -11,7 +11,6 @@
 #include "tcp/stream.h"
 #include "http/request.h"
 #include <array>
-#include <iostream>
 #include <string_view>
 #include <cstring>
 
@@ -48,7 +47,6 @@ namespace http {
         if (s.m_buffer[0] == '\0' && s.pos_tracker == buffer_size + 1) {
             std::span<char> tcp_writable_area{ s.m_buffer.begin(), s.m_buffer.end() };
             s.m_ts >> tcp_writable_area;
-            std::cout << "received: " << tcp_writable_area.size() << " bytes" << std::endl;
             // retry looking for eol
             s.pos_tracker = 0;
         }
@@ -59,7 +57,6 @@ namespace http {
             size_t pos = remainder.find(eol);
             if (pos == std::string_view::npos) {
                 if (s.m_ts.available()) {
-                    std::cout << "received: " << s.m_ts.available() << " bytes" << std::endl;
                     // move data to start of array
                     std::memmove(s.m_buffer.data(), s.m_buffer.data() + s.pos_tracker, remainder.size());
                     std::memset(s.m_buffer.data() + remainder.size(), 0, s.m_buffer.size() - remainder.size());
@@ -98,7 +95,6 @@ namespace http {
 
             b << remainder;
             if (s.m_ts.available()) {
-                std::cout << "received: " << s.m_ts.available() << " bytes" << std::endl;
                 // move data to start of array
                 std::memmove(s.m_buffer.data(), s.m_buffer.data() + s.pos_tracker, remainder.size());
                 std::memset(s.m_buffer.data() + remainder.size(), 0, s.m_buffer.size() - remainder.size());
